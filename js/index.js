@@ -1,7 +1,7 @@
 var app = angular.module('resume', [])
     .controller('personCtrl', function ($scope) {
     $scope.personInfo = {
-        img: 'https://media.licdn.com/dms/image/C5603AQGGwx8Kl4tfpg/profile-displayphoto-shrink_200_200/0?e=1545868800&v=beta&t=_R405XgW3cJd-MJb4BE95dT7YRMYPMuWjydWz5IbH6U',
+        img: 'https://media.licdn.com/dms/image/C5603AQHDAzKta6cpXA/profile-displayphoto-shrink_200_200/0?e=1547078400&v=beta&t=D23I3vFxN68hscd0adA408NI7W30JZLTveg20etrB6g',
         name: 'Jackie Rubly',
         description: 'front end web developer',
         email: {
