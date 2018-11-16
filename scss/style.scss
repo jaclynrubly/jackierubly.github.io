@@ -1,252 +1,110 @@
-$sans-serif: 'Open Sans', sans-serif;
-$serif: 'Vollkorn', serif;
-$mid-width: '(max-width: 900px)';
-$mobile-width: '(max-width: 600px)';
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-@mixin main-heading-h1 {
-  font-size: 2rem;
-  padding-bottom: 5px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
-  font-family: $serif;
-  color: #333;
-  
-  @media #{$mid-width} {
-    text-align: center;
-  }
+// ------------- MIXINS ------------- //
+@mixin transition($time, $property: all, $easing: ease-in) {
+    transition: $property $time $easing;
 }
 
-@mixin sub-heading-h2 {
-  font-size: 1.5rem;
-  font-family: $serif;
-  color: #444;
-  display: inline-block;
-  
-  @media #{$mid-width} {
-    text-align: center;
-    display: block;
-  }
+// ------------- VARIABLES ------------- //
+$parallax-offset: 30vh;
+$content-offset: 40vh;
+$transition-speed: 1.2s;
+$slide-number: 3;
+
+html, body {
+  overflow: hidden;
 }
 
-%sub-heading-h3 {
-  font-size: 1.25em;
-  font-family: $serif;
-  margin: 10px 0 5px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-%list-columns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.background {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  height: 100vh + $parallax-offset;
+  position: fixed;
   width: 100%;
-}
-
-%inline-italicized-text {
-  margin-left: 5px;
-  font-style: italic;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-}
-
-a {
-  text-decoration: none;
-  color: #555;
-  transition: 0.3s ease;
-
-  &:hover {
-    color: #CC00CC;
+  transform: translateY($parallax-offset);
+  @include transition($transition-speed, all, cubic-bezier(0.22, 0.44, 0, 1));
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
   }
-}
-
-article {
-  line-height: 1.5;
-  padding-bottom: 200px;
-  color: #333;
-}
-
-header {
-  text-align: center;
-  background-image: url ("https://www.stockvault.net/data/2018/01/30/242494/preview16.jpg");
-  background: rgba(236, 178, 194, 0.8);
-  padding: 50px 0;
-
-  h1 {
-    font-family: $serif;
-    font-size: 3em;
-  }
-
-  h2 {
-    font-family: $sans-serif;
-    font-style: italic;
-    font-size: 1.5em;
-    padding: 0 20px;
-  }
-}
-
-.resume-image {
-  border-radius: 50%;
-  max-width: 200px;
-  margin-bottom: 30px;
-}
-
-.contact-info {
-  font-family: $sans-serif;
-  margin-top: 20px;
-}
-
-.phone-number,
-.email-address {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.icon {
-  margin: 0 5px;
-}
-
-section {
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: $sans-serif;
-  box-sizing: border-box;
-  
-  &:first-of-type {
-    margin-top: 30px;
-  }
-
-  h1 {
-    @include main-heading-h1;
-  }
-
-  h2 {
-    @include sub-heading-h2;
-  }
-}
-
-.education-section-heading {
-  margin-right: 10px;
-}
-
-.address-container {
-  display: inline-block;
-}
-
-.school-name-location-date-container {
-  display: inline-block;
-
-  @media #{$mid-width} {
-    display: block;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-}
-
-.school-location,
-.school-dates,
-.state-abbr {
-  @extend %inline-italicized-text;
-}
-
-.languages-list,
-.tools-list {
-  @extend %list-columns;
-  
-  @media #{$mobile-width} {
-    flex-wrap: wrap;
-  }
-  
-  >li {
-    flex-grow: 1;
-    
-    @media #{$mid-width} {
-      width: 45%;
-      margin-bottom: 20px;
+  &:first-child {
+    background-image: url(https://i.postimg.cc/kXq9Qmnj/bgd1.jpg);
+    transform: translateY(-$parallax-offset / 2);
+    .content-wrapper {
+      transform: translateY($parallax-offset /2);
     }
   }
+  &:nth-child(2) {
+    background-image: url(https://i.postimg.cc/W14vywqg/photo-1424746219973-8fe3bd07d8e3.jpg);
+  }
+  &:nth-child(3) {
+    background-image: url(https://i.postimg.cc/TY0xQ41T/photo-1433840496881-cbd845929862.jpg);
+  }
 }
 
-.secondary-languages-list,
-.secondary-tools-list {
-  color: #555;
+/* Set stacking context of slides */
+@for $i from 1 to ($slide-number + 1) {
+    .background:nth-child(#{$i}) {
+        z-index: ($slide-number + 1) - $i; 
+    }
+}
 
-    li {
-      margin-left: 10px;
-      
-      @media #{$mid-width} {
-        margin-left: 0;
-        text-align: center;
+.content {
+  &-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-flow: column nowrap;
+  color: #fff;
+  font-family: Montserrat;
+  text-transform: uppercase;
+  transform: translateY($content-offset);
+  will-change: transform;
+  backface-visibility: hidden;
+  @include transition($transition-speed + .5, all, cubic-bezier(0.22, 0.44, 0, 1));
+  }
+  &-title {
+    font-size: 12vh;
+    line-height: 1.4;
+  }
+}
+
+// ------------- SET TRANSFORM VALUES ------------- //
+
+.background.up-scroll {
+  transform: translate3d(0,-$parallax-offset / 2,0);
+  .content-wrapper {
+    transform: translateY($parallax-offset / 2);
+  }
+  + .background {
+    transform: translate3d(0,$parallax-offset,0);
+      .content-wrapper {
+        transform: translateY($parallax-offset);
       }
     }
 }
 
-.work-experience-list {
-  li {
-    width: 100%;
-    padding: 0 10px;
-    margin-bottom: 30px;
+.background.down-scroll {
+  transform: translate3d(0,-(100vh + $parallax-offset),0);
+  .content-wrapper {
+    transform: translateY($content-offset);
+  }
+  + .background:not(.down-scroll) {
+    transform: translate3d(0,-$parallax-offset / 2,0);
+      .content-wrapper {
+        transform: translateY($parallax-offset / 2);
+      }
   }
 }
-
-.secondary-work-experience-list {
-  >li {
-    padding: 5px 0;
-    margin-left: 10px;
-  }
-}
-
-.tertiary-work-experience-list {
-  list-style: square;
-  margin-left: 15px;
-  
-  >li {
-    margin: 0 0 5px 10px;
-  }
-}
-
-.organization-name {
-  display: inline-block;
-}
-
-.organization-link:hover {
-  color: #888;
-  text-shadow: none;
-}
-
-.organization-dates {
-  @extend %inline-italicized-text
-}
-
-.position-title {
-  @extend %sub-heading-h3;
-}
-
-.camps-conferences-container {
-  margin-bottom: 15px;
-  
-  p {
-    margin-left: 5px;
-    
-    @media #{$mid-width} {
-      text-align: center;
-    }
-  }
-}
-
-.camp-dates {
-  @extend %inline-italicized-text;
-  
-  @media #{$mid-width} {
-    display: block;
-    text-align: center;
-  }
-}
-
