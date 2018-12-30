@@ -1,10 +1,10 @@
 
 
 <!--
-Copyright (c) 2018 by Jaclyn Rubly (https://codepen.io/jrubly/pen/OBraOV)
+Copyright (c) 2018 by Jaclyn Rubly (https://codepen.io/jrubly/pen/pqWMoW)
 
 
-Fork of an original work by Amie Wilt (https://codepen.io/awilt/pen/JdKVyE)
+Fork of an original work by mario s maselli (https://codepen.io/mariosmaselli/pen/CDcmb)
 
 
 
